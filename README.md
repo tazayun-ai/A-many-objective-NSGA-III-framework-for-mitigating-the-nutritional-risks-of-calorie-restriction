@@ -1,4 +1,4 @@
-Many-objective NSGA-III diet optimisation — data and code
+Many-objective NSGA-III diet optimisation: data and code
 
 Food-composition dataset and code for the paper:
 
@@ -7,9 +7,9 @@ T. Shakeel, A. A. Khan, R. Sidiqi. A many-objective NSGA-III framework for mitig
 The method treats the side effects of a calorie deficit (lean-muscle loss, hair thinning, low mood, persistent hunger) as explicit objectives and optimises a full day's intake with NSGA-III over a pool of real USDA foods.
 
 Contents
-opt125.py — the full pipeline: data prep, objective/constraint model, NSGA-III search, plan selection, evaluation, and the client plan document
-foods_no_zero_energy.csv — merged, cleaned food-composition table (7,964 foods)
-README — this file
+opt125.py: the full pipeline: data prep, objective and constraint model, NSGA-III search, plan selection, evaluation, and the client plan document
+foods_no_zero_energy.csv: merged, cleaned food-composition table (7,964 foods)
+README: this file
 Requirements
 
 Python 3.10+ and:
@@ -20,7 +20,7 @@ Optional, only for the meal-plan document and recipe text:
 
 pip install python-docx google-genai requests
 
-python-docx writes the client plan as a .docx; google-genai / requests call the Gemini API to draft recipe wording in the rebuild stage. Both are optional — the optimisation and every reported metric run without them.
+python-docx writes the client plan as a .docx; google-genai and requests call the Gemini API to draft recipe wording in the rebuild stage. Both are optional; the optimisation and every reported metric run without them.
 
 Data
 
@@ -39,7 +39,7 @@ Built from USDA FoodData Central (public domain) by merging Foundation Foods and
 Data quality notes
 A 0 can mean "reported zero" or "not measured," because missing values were set to zero.
 Sparse columns (under 40% populated): LA, ALA, EPA, DHA, trans fat, added sugars, vitamin D, biotin, iodine, molybdenum. Biotin, iodine and molybdenum are non-zero in under 1% of foods, so any score leaning on them is unreliable.
-Sugars, added and Added Sugars (g) are identical in every row — a duplicate; keep one.
+Sugars, added and Added Sugars (g) are identical in every row, so one is a duplicate; keep one.
 This is the table before the pipeline's own filters, which reduce it to the 2,307-food candidate pool used in the paper.
 Running it
 
@@ -47,7 +47,7 @@ The script is interactive:
 
 python opt125.py
 
-It prompts for: the user profile (sex, age, weight, height, activity level, GLP-1 / weight-loss flag); the food CSV path (enter foods_no_zero_energy.csv — multiple comma-separated paths are accepted); the serving grid in grams (default 5); and the run type — press Enter for a research-grade run, or choose the quick trial (n_gen 80, 2 seeds). Optional prompts follow for a score-equation sensitivity analysis, a crossover/mutation operator sweep, reusing checkpoints, and a Gemini API key if you want recipe text.
+It prompts for: the user profile (sex, age, weight, height, activity level, GLP-1 or weight-loss flag); the food CSV path (enter foods_no_zero_energy.csv; multiple comma-separated paths are accepted); the serving grid in grams (default 5); and the run type, where you press Enter for a research-grade run or choose the quick trial (n_gen 80, 2 seeds). Optional prompts follow for a score-equation sensitivity analysis, a crossover and mutation operator sweep, reusing checkpoints, and a Gemini API key if you want recipe text.
 
 Settings used in the paper
 Algorithm: NSGA-III with Riesz s-energy reference directions; population 210
@@ -59,19 +59,19 @@ Serving grid: 5 g; cardinality: 5 to 20 active foods
 Random baseline: 2,000 feasible diets
 Selection: equal-weight multi-criteria rule over the pooled front
 Outputs (written to the run folder)
-pareto_front.csv — pooled non-dominated plans
-recommended_diet_plan.csv — the selected plan
-recommended_meal_split.csv — the plan split into five meals
-recommended_plan_watchlist.csv — nutrients sitting near their limits
-pareto_front_pcp.png — parallel-coordinates view of the front
-convergence_hv.csv, convergence_hv.png, convergence_rate_hv.png — hypervolume traces
-nutrient_sensitivity.csv / .png — if the sensitivity analysis is run
-diet_plan_client.docx / rebuilt_diet_plan.docx and adjustments_log.csv — the issued plan (needs python-docx)
+pareto_front.csv: pooled non-dominated plans
+recommended_diet_plan.csv: the selected plan
+recommended_meal_split.csv: the plan split into five meals
+recommended_plan_watchlist.csv: nutrients sitting near their limits
+pareto_front_pcp.png: parallel-coordinates view of the front
+convergence_hv.csv, convergence_hv.png, convergence_rate_hv.png: hypervolume traces
+nutrient_sensitivity.csv and .png: if the sensitivity analysis is run
+diet_plan_client.docx or rebuilt_diet_plan.docx, and adjustments_log.csv: the issued plan (needs python-docx)
 License
 
-Choose and state a license. Code: MIT is common for research code. Derived data: USDA FoodData Central is public domain
+Choose and state a license. Code: MIT is common for research code. Derived data: USDA FoodData Central is public domain.
 
 Contact
 
-Tazayun Shakeel (corresponding author) — tazayunbhat2020@cukashmir.edu.in
+Tazayun Shakeel (corresponding author), tazayunbhat2020@cukashmir.edu.in
 Department of Information Technology, School of Engineering & Technology, Central University of Kashmir, Ganderbal 191131, Jammu and Kashmir, India
