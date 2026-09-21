@@ -1,8 +1,8 @@
-Many-objective NSGA-III diet optimisation: data and code
+Many-objective NSGA-III diet optimisation — data and code
 
-Food-composition dataset and code for the paper:
+This repository holds the food-composition dataset and the code for the paper:
 
-T. Shakeel, A. A. Khan, R. Sidiqi. A many-objective NSGA-III framework for mitigating the nutritional risks of calorie restriction. Submitted to Applied Soft Computing, 2026.
+T. Shakeel, A. A. Khan, S. Khan. A many-objective NSGA-III framework for mitigating the nutritional risks of calorie restriction.
 
 The method treats the side effects of a calorie deficit (lean-muscle loss, hair thinning, low mood, persistent hunger) as explicit objectives and optimises a full day's intake with NSGA-III over a pool of real USDA foods.
 
